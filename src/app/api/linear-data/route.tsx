@@ -1,3 +1,4 @@
+import { LinearTicket } from "@/lib/types";
 import { NextResponse } from "next/server";
 
 const LINEAR_API_URL = "https://api.linear.app/graphql";
@@ -68,7 +69,7 @@ export async function GET() {
 
     // Sort issues by created date descending (newest first)
     const sortedIssues = data.data.issues.nodes.sort(
-      (a: any, b: any) =>
+      (a: LinearTicket, b: LinearTicket) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
     console.log('ISSUES: ', sortedIssues)
