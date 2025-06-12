@@ -17,3 +17,10 @@ export type LinearTicket = {
         name: "Technical Consulting";
     };
 }
+
+export type LinearTicketAssigneeMap = {
+    tickets: LinearTicket[];
+    totalCount: number;
+    doneCount: number;
+    inProgressCount: number;
+}

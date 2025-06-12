@@ -14,15 +14,15 @@ export default function TicketDisplayCard({ ticket }: TicketDisplayCardProps) {
         <strong>ID:</strong> {ticket.identifier}
       </p>
       <p>
-        <strong>Description:</strong>{" "}
+        <strong>Description:</strong>
         {ticket.description || "No description provided"}
       </p>
       <p>
-        <strong>Created At:</strong>{" "}
+        <strong>Created At:</strong>
         {new Date(ticket.createdAt).toLocaleDateString()}
       </p>
       <p>
-        <strong>Updated At:</strong>{" "}
+        <strong>Updated At:</strong>
         {new Date(ticket.updatedAt).toLocaleDateString()}
       </p>
       <p>
