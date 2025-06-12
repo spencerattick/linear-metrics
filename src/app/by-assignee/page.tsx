@@ -7,20 +7,20 @@ export default function ByAssignee() {
   const { linearData } = useLinearContext();
 
   const byAssignee = getTicketsByAssignee(linearData || []);
-  const assignees = Object.keys(byAssignee);
-  console.log("byAssignee", byAssignee);
 
   return (
     <>
       <h1 className="text-2xl text-center">Tickets by Assignee</h1>
-      {assignees.map((assignee) => (
-          <div key={assignee} className="m-4">
-            <h1 className="text-2xl">{assignee}</h1>
-            <p>In Progress: </p>
-            <p>Done: </p>
-            <p>Total: </p>
+      {byAssignee.map((assignee) => (
+        <div key={assignee.id} className="m-4">
+          <h1 className="text-2xl">{assignee.assigneeName}</h1>
+          <div>
+            <p>Total: {assignee.totalCount}</p>
+            <p>In Progress: {assignee.inProgressCount}</p>
+            <p>Done: {assignee.doneCount}</p>
           </div>
-        ))}
+        </div>
+      ))}
     </>
   );
 }
