@@ -1,17 +1,14 @@
-// import { LinearTicket } from "@/lib/types";
-// import { getTicketsByAssignee } from "@/lib/utils";
-
-import Link from "next/link";
+import { LinearTicket } from "@/lib/types";
+import { getTicketsByAssignee } from "@/lib/utils";
 
 export default async function Home() {
-  // const response = await fetch("http://localhost:3001/api/linear-data");
-  // const data = await response.json();
-  // const groupedByAssignee = getTicketsByAssignee(data);
-  // console.log(groupedByAssignee);
+  const response = await fetch("http://localhost:3001/api/linear-data");
+  const data = await response.json();
+  const groupedByAssignee = getTicketsByAssignee(data);
+  console.log(groupedByAssignee);
   return (
     <div>
-      <Link href='/all-data'>See All Ticket Data</Link>
-      {/* {data.map((ticket: LinearTicket) => {
+      {data.map((ticket: LinearTicket) => {
         return (
           <div key={ticket.id} className="border p-4 mb-4">
             <h2 className="text-xl font-bold">{ticket.title}</h2>
@@ -39,7 +36,7 @@ export default async function Home() {
             </p>
           </div>
         );
-      })} */}
+      })}
     </div>
   );
 }
