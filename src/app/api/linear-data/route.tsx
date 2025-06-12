@@ -72,7 +72,7 @@ export async function GET() {
       (a: LinearTicket, b: LinearTicket) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
-    console.log('ISSUES: ', sortedIssues)
+    // console.log('ISSUES: ', sortedIssues)
     return NextResponse.json(sortedIssues);
   } catch (error) {
     console.error("Error fetching Linear issues:", error);
