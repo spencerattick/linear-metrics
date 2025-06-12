@@ -1,23 +1,7 @@
-import { LinearTicket, LinearTicketAssigneeMap } from "./types";
+import { AssigneeStats, LinearTicket, LinearTicketAssigneeMap } from "./types";
 
-// export function getTicketsByAssignee(tickets: LinearTicket[]) {
-//   const assigneeMap: Record<string, LinearTicket[]> = {};
-//   tickets.forEach((ticket) => {
-//     //sort tickets based on assignee name
-//     const assigneeName = ticket.assignee?.name || "Unassigned";
-//     if (!assigneeMap[assigneeName]) {
-//       assigneeMap[assigneeName] = [];
-//     } else {
-//       assigneeMap[assigneeName].push(ticket);
-//     }
-
-//     //
-//   });
-//   return assigneeMap;
-// }
-
-export function getTicketsByAssignee(tickets: LinearTicket[]) {
-  const assigneeMap: any = {};
+export function getTicketsByAssignee(tickets: LinearTicket[]): LinearTicketAssigneeMap[] {
+  const assigneeMap: Record<string, AssigneeStats> = {};
   let incrementingId = 0;
   tickets.forEach((ticket) => {
     const assigneeName = ticket.assignee?.name || "Unassigned";
