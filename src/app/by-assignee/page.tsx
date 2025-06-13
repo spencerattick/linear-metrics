@@ -1,26 +1,42 @@
-"use client";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
+import AgentMetricsTable from "@/components/assignee-metrics";
 
-import { useLinearContext } from "@/lib/hooks";
-import { getTicketsByAssignee } from "@/lib/utils";
-
-export default function ByAssignee() {
-  const { linearData } = useLinearContext();
-
-  const byAssignee = getTicketsByAssignee(linearData || []);
-
+export default function TeamPage() {
   return (
-    <>
-      <h1 className="text-2xl text-center">Tickets by Assignee</h1>
-      {byAssignee.map((assignee) => (
-        <div key={assignee.id} className="m-4">
-          <h1 className="text-2xl">{assignee.assigneeName}</h1>
-          <div>
-            <p>Total: {assignee.totalCount}</p>
-            <p>In Progress: {assignee.inProgressCount}</p>
-            <p>Done: {assignee.doneCount}</p>
-          </div>
-        </div>
-      ))}
-    </>
+    <div className="space-y-6">
+      <Tabs defaultValue="table" className="space-y-4">
+        <TabsContent value="table" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Agent Metrics</CardTitle>
+              <CardDescription>
+                Detailed breakdown of tickets per agent with status distribution
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <AgentMetricsTable />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="chart" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Comparative Performance</CardTitle>
+              <CardDescription>
+                Visual comparison of ticket distribution across team members
+              </CardDescription>
+            </CardHeader>
+          </Card>
+        </TabsContent>
+      </Tabs>
+    </div>
   );
 }
