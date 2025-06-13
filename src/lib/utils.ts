@@ -1,6 +1,16 @@
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 import { AssigneeStats, LinearTicket, LinearTicketAssigneeMap } from "./types";
 
-export function getTicketsByAssignee(tickets: LinearTicket[]): LinearTicketAssigneeMap[] {
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+
+export function getTicketsByAssignee(
+  tickets: LinearTicket[]
+): LinearTicketAssigneeMap[] {
   const assigneeMap: Record<string, AssigneeStats> = {};
   let incrementingId = 0;
   tickets.forEach((ticket) => {
