@@ -1,13 +1,28 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, ArrowUpDown, Search } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { formatDistanceToNow } from "date-fns"
+import { useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+  ArrowUpDown,
+  Search,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { formatDistanceToNow } from "date-fns";
+import { useLinearContext } from "@/lib/hooks";
 
 // Sample data - would be replaced with actual API data
 const ticketsData = [
@@ -131,17 +146,26 @@ const ticketsData = [
     updatedAt: new Date(2023, 5, 15),
     labels: ["feature", "frontend"],
   },
-]
+];
 
-type SortField = "id" | "title" | "status" | "priority" | "assignee" | "project" | "updatedAt"
-type SortDirection = "asc" | "desc"
+type SortField =
+  | "id"
+  | "title"
+  | "status"
+  | "priority"
+  | "assignee"
+  | "project"
+  | "updatedAt";
+type SortDirection = "asc" | "desc";
 
 export function TicketsTable() {
-  const [sortField, setSortField] = useState<SortField>("updatedAt")
-  const [sortDirection, setSortDirection] = useState<SortDirection>("desc")
-  const [searchQuery, setSearchQuery] = useState("")
-  const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 10
+  const { linearData } = useLinearContext();
+
+  const [sortField, setSortField] = useState<SortField>("updatedAt");
+  const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   // Filter tickets based on search query
   const filteredTickets = ticketsData.filter(
@@ -150,21 +174,23 @@ export function TicketsTable() {
       ticket.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
       ticket.assignee.toLowerCase().includes(searchQuery.toLowerCase()) ||
       ticket.project.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      ticket.labels.some((label) => label.toLowerCase().includes(searchQuery.toLowerCase())),
-  )
+      ticket.labels.some((label) =>
+        label.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+  );
 
   // Sort tickets based on sort field and direction
   const sortedTickets = [...filteredTickets].sort((a, b) => {
     if (sortField === "id") {
-      const aNum = Number.parseInt(a.id.split("-")[1])
-      const bNum = Number.parseInt(b.id.split("-")[1])
-      return sortDirection === "asc" ? aNum - bNum : bNum - aNum
+      const aNum = Number.parseInt(a.id.split("-")[1]);
+      const bNum = Number.parseInt(b.id.split("-")[1]);
+      return sortDirection === "asc" ? aNum - bNum : bNum - aNum;
     }
 
     if (sortField === "updatedAt") {
       return sortDirection === "asc"
         ? a.updatedAt.getTime() - b.updatedAt.getTime()
-        : b.updatedAt.getTime() - a.updatedAt.getTime()
+        : b.updatedAt.getTime() - a.updatedAt.getTime();
     }
 
     if (
@@ -176,24 +202,27 @@ export function TicketsTable() {
     ) {
       return sortDirection === "asc"
         ? a[sortField].localeCompare(b[sortField])
-        : b[sortField].localeCompare(a[sortField])
+        : b[sortField].localeCompare(a[sortField]);
     }
 
-    return 0
-  })
+    return 0;
+  });
 
   // Paginate tickets
-  const totalPages = Math.ceil(sortedTickets.length / itemsPerPage)
-  const paginatedTickets = sortedTickets.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+  const totalPages = Math.ceil(sortedTickets.length / itemsPerPage);
+  const paginatedTickets = sortedTickets.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handleSort = (field: SortField) => {
     if (field === sortField) {
-      setSortDirection(sortDirection === "asc" ? "desc" : "asc")
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
-      setSortField(field)
-      setSortDirection("desc")
+      setSortField(field);
+      setSortDirection("desc");
     }
-  }
+  };
 
   return (
     <div>
@@ -243,7 +272,7 @@ export function TicketsTable() {
                   <ArrowUpDown className="h-3 w-3" />
                 </Button>
               </TableHead>
-              <TableHead className="w-[100px]">
+              {/* <TableHead className="w-[100px]">
                 <Button
                   variant="ghost"
                   onClick={() => handleSort("priority")}
@@ -252,7 +281,7 @@ export function TicketsTable() {
                   Priority
                   <ArrowUpDown className="h-3 w-3" />
                 </Button>
-              </TableHead>
+              </TableHead> */}
               <TableHead className="w-[150px]">
                 <Button
                   variant="ghost"
@@ -263,7 +292,7 @@ export function TicketsTable() {
                   <ArrowUpDown className="h-3 w-3" />
                 </Button>
               </TableHead>
-              <TableHead className="w-[150px]">
+              {/* <TableHead className="w-[150px]">
                 <Button
                   variant="ghost"
                   onClick={() => handleSort("project")}
@@ -272,7 +301,7 @@ export function TicketsTable() {
                   Project
                   <ArrowUpDown className="h-3 w-3" />
                 </Button>
-              </TableHead>
+              </TableHead> */}
               <TableHead className="w-[150px]">
                 <Button
                   variant="ghost"
@@ -283,64 +312,71 @@ export function TicketsTable() {
                   <ArrowUpDown className="h-3 w-3" />
                 </Button>
               </TableHead>
-              <TableHead className="w-[120px]">Labels</TableHead>
+              {/* <TableHead className="w-[120px]">Labels</TableHead> */}
             </TableRow>
           </TableHeader>
           <TableBody>
-            {paginatedTickets.length > 0 ? (
-              paginatedTickets.map((ticket) => (
+            {linearData ? (
+              linearData.map((ticket) => (
                 <TableRow key={ticket.id}>
-                  <TableCell className="font-medium">{ticket.id}</TableCell>
+                  <TableCell className="font-medium">{ticket.identifier}</TableCell>
                   <TableCell>{ticket.title}</TableCell>
                   <TableCell>
                     <Badge
                       className={cn(
-                        ticket.status === "Done" && "bg-green-500",
-                        ticket.status === "In Progress" && "bg-purple-500",
-                        ticket.status === "Todo" && "bg-blue-500",
+                        ticket.state.name === "Done" && "bg-green-500",
+                        ticket.state.name === "In Progress" && "bg-purple-500",
+                        ticket.state.name === "Triage" && "bg-blue-500"
                       )}
                     >
-                      {ticket.status}
+                      {ticket.state.name}
                     </Badge>
                   </TableCell>
-                  <TableCell>
+                  {/* <TableCell>
                     <Badge
                       variant="outline"
                       className={cn(
                         "text-xs",
-                        ticket.priority === "High" && "border-red-500 text-red-500",
-                        ticket.priority === "Medium" && "border-yellow-500 text-yellow-500",
-                        ticket.priority === "Low" && "border-blue-500 text-blue-500",
+                        ticket.priority === "High" &&
+                          "border-red-500 text-red-500",
+                        ticket.priority === "Medium" &&
+                          "border-yellow-500 text-yellow-500",
+                        ticket.priority === "Low" &&
+                          "border-blue-500 text-blue-500"
                       )}
                     >
                       {ticket.priority}
                     </Badge>
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell>
                     <div className="flex items-center gap-2">
-                      <div className="h-6 w-6 rounded-full overflow-hidden">
+                      {/* <div className="h-6 w-6 rounded-full overflow-hidden">
                         <img
                           src={ticket.assigneeAvatar || "/placeholder.svg"}
                           alt={ticket.assignee}
                           className="h-full w-full object-cover"
                         />
-                      </div>
-                      <span className="text-sm">{ticket.assignee}</span>
+                      </div> */}
+                      <span className="text-sm">{ticket.assignee?.name || 'Not Assigned'}</span>
                     </div>
                   </TableCell>
-                  <TableCell>{ticket.project}</TableCell>
+                  {/* <TableCell>{ticket.project}</TableCell> */}
                   <TableCell className="text-muted-foreground text-sm">
                     {formatDistanceToNow(ticket.updatedAt, { addSuffix: true })}
                   </TableCell>
-                  <TableCell>
+                  {/* <TableCell>
                     <div className="flex flex-wrap gap-1">
                       {ticket.labels.map((label) => (
-                        <Badge key={label} variant="secondary" className="text-xs">
+                        <Badge
+                          key={label}
+                          variant="secondary"
+                          className="text-xs"
+                        >
                           {label}
                         </Badge>
                       ))}
                     </div>
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               ))
             ) : (
@@ -357,11 +393,20 @@ export function TicketsTable() {
       {/* Pagination */}
       <div className="flex items-center justify-between px-4 py-4 border-t">
         <div className="text-sm text-muted-foreground">
-          Showing {paginatedTickets.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0} to{" "}
-          {Math.min(currentPage * itemsPerPage, filteredTickets.length)} of {filteredTickets.length} tickets
+          Showing{" "}
+          {paginatedTickets.length > 0
+            ? (currentPage - 1) * itemsPerPage + 1
+            : 0}{" "}
+          to {Math.min(currentPage * itemsPerPage, filteredTickets.length)} of{" "}
+          {filteredTickets.length} tickets
         </div>
         <div className="flex items-center space-x-2">
-          <Button variant="outline" size="icon" onClick={() => setCurrentPage(1)} disabled={currentPage === 1}>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => setCurrentPage(1)}
+            disabled={currentPage === 1}
+          >
             <ChevronsLeft className="h-4 w-4" />
           </Button>
           <Button
@@ -394,5 +439,5 @@ export function TicketsTable() {
         </div>
       </div>
     </div>
-  )
+  );
 }
