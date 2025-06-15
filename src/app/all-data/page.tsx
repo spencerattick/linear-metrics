@@ -1,6 +1,6 @@
 "use client";
 
-import TicketDisplayCard from "@/contexts/ticket-display-card";
+import TicketDisplayCard from "@/components/ticket-display-card";
 import { useLinearContext } from "@/lib/hooks";
 import { LinearTicket } from "@/lib/types";
 

@@ -99,8 +99,8 @@ export default function AgentMetricsTable() {
             <TableRow key={assignee.id}>
               <TableCell className="font-medium">
                 <div className="flex items-center gap-2">
-                  <div className="h-8 w-8 rounded-full overflow-hidden">
-                  </div>
+                  {/* <div className="h-8 w-8 rounded-full overflow-hidden">
+                  </div> */}
                   <span>{assignee.assigneeName}</span>
                 </div>
               </TableCell>
